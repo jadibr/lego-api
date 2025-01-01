@@ -1,0 +1,19 @@
+version : "3.8"
+
+name: lego-api
+services:
+  lego-db_dev:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: ${ACCEPT_EULA:?accept_eula_missing}
+      SA_PASSWORD: ${SA_PASSWORD:?sa_password_missing}
+    ports:
+      - "1433:1433"
+    volumes:
+      - type: volume
+        source: sql-data
+        target: /var/opt/mssql
+
+
+volumes:
+  sql-data:
