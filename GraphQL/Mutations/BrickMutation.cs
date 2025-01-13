@@ -9,7 +9,6 @@ public class BrickMutation(BrickService brickService)
   public async Task<Brick> AddBrick(
       [UseFluentValidation] CreateBrickInput brickInput)
   {
-
     return await brickService.Create(
       new Brick
       {
@@ -21,4 +20,11 @@ public class BrickMutation(BrickService brickService)
       }
     );
   }
+
+  [Authorize]
+  public async Task<Brick> UpdateBrick(
+    [UseFluentValidation] UpdateBrickInput brickInput)
+    {
+      return await brickService.Update(brickInput);
+    }
 }
