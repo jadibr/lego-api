@@ -47,6 +47,49 @@ namespace lego_api.Migrations
                     b.ToTable("Bricks");
                 });
 
+            modelBuilder.Entity("lego_api.SetBrickEntity", b =>
+                {
+                    b.Property<Guid>("SetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BrickId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("SetId", "BrickId");
+
+                    b.HasIndex("BrickId");
+
+                    b.ToTable("SetBrickEntity");
+                });
+
+            modelBuilder.Entity("lego_api.SetEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
+
+                    b.Property<int>("InStockCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SetNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SetEntity");
+                });
+
             modelBuilder.Entity("lego_api.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -68,6 +111,25 @@ namespace lego_api.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("lego_api.SetBrickEntity", b =>
+                {
+                    b.HasOne("lego_api.BrickEntity", "Brick")
+                        .WithMany()
+                        .HasForeignKey("BrickId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("lego_api.SetEntity", "Set")
+                        .WithMany()
+                        .HasForeignKey("SetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brick");
+
+                    b.Navigation("Set");
                 });
 #pragma warning restore 612, 618
         }

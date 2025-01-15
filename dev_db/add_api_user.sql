@@ -16,5 +16,8 @@ EXEC sp_addrolemember 'db_datawriter', 'lego-api';
 GRANT CREATE TABLE, ALTER, VIEW DEFINITION TO [lego-api];
 GO
 
+GRANT REFERENCES ON SCHEMA::dbo TO [lego-api];
+GO
+
 ALTER LOGIN [lego-api] WITH DEFAULT_DATABASE = lego;
 GO
